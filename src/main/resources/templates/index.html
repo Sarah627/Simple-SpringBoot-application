@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Aid Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Financial Aid Form</h1>
+    <form id="aid-form" class="form-container">
+      <label for="aid-description"
+        >Again and Again</label
+      ><br />
+      <textarea
+        id="aid-description"
+        name="response"
+        rows="4"
+        cols="50"
+        class="input-field"
+      ></textarea
+      ><br />
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+    <p id="result"></p>
+
+    <br /><br />
+
+    <script>
+      document
+        .getElementById("aid-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var description = document.getElementById("aid-description").value;
+          var formData = { response: description };
+
+          fetch("/capitalize", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          })
+            .then((response) => response.text())
+            .then((result) => {
+              document.getElementById("result").textContent =
+                "Response: " + result;
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+  </body>
+</html>
